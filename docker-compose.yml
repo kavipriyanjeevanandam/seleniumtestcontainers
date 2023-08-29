@@ -1,0 +1,18 @@
+version: "3"
+services:
+  backend:
+    image: kavipriyanjeevanandam/ml-flask:0.1
+    ports:
+      - "5000:5000"
+    networks:
+      - ml_network
+
+  frontend:
+    image: kavipriyanjeevanandam/ml-angular:0.1
+    ports:
+      - "80:80"
+    networks:
+      - ml_network
+networks:
+  ml_network:
+    driver: bridge
