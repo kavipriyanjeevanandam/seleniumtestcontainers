@@ -48,20 +48,20 @@ class LoginTest(unittest.TestCase):
         # Test Case: Verify that entering a too short password shows an error message
         password_input.send_keys("short")
         password_input.send_keys(Keys.TAB)  # Move focus out of the input field
-        password_error_message = self.driver.wait_for_element_visible(By.XPATH, "//small[contains(text(),'Password must be atleast 8 letters long')]")
+        password_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Password must be atleast 8 letters long')]")
         self.assertTrue(password_error_message.is_displayed())
 
 
     def test_successful_login(self):
-        email_input = driver.find_element(By.CSS_SELECTOR, 'input[formcontrolname="email"]')
-        password_input = driver.find_element(By.CSS_SELECTOR, 'input[formcontrolname="password"]')
+        email_input = self.driver.find_element(By.CSS_SELECTOR, 'input[formcontrolname="email"]')
+        password_input = self.driver.find_element(By.CSS_SELECTOR, 'input[formcontrolname="password"]')
         email_input.send_keys("kavi@gmail.com")
         password_input.send_keys("kavipriyan")
-        login_button = driver.find_element(By.XPATH, '//button[.//span[contains(text(), "Login")]]')
+        login_button = self.driver.find_element(By.XPATH, '//button[.//span[contains(text(), "Login")]]')
         login_button.click()
         expected_url = "http://frontendcontainer/prediction"
         sleep(1)
-        self.assertEqual(driver.current_url, expected_url)
+        self.assertEqual(self.driver.current_url, expected_url)
 
     def tearDown(self):
         self.driver.quit()
