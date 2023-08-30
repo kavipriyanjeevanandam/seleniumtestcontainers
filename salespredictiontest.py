@@ -32,6 +32,24 @@ class LoginTest(unittest.TestCase):
         environ["DISPLAY"] = ":99"
         self.driver = webdriver.Chrome(options=chrome_options)
 
+    def invalid_email_type(self):
+        driver = self.driver
+        driver.get("http://frontendcontainer:80")
+        email_input = driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
+        email_error_message = driver.find_element(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
+
+    # Test Case: Verify that entering an incorrect email format shows an error message
+        email_input.send_keys("invalid-email")
+        email_input.send_keys(Keys.TAB)  # Move focus out of the input field
+        assert email_error_message.is_displayed()
+
+    # Test Case: Verify that entering a valid email format clears the error message
+        email_input.clear()
+        email_input.send_keys("valid@example.com")
+        email_input.send_keys(Keys.TAB)  # Move focus out of the input field
+        assert not email_error_message.is_displayed()
+        
+
     def test_successful_login(self):
         driver = self.driver
         driver.get("http://frontendcontainer:80")
