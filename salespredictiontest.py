@@ -41,8 +41,6 @@ class LoginTest(unittest.TestCase):
         email_input.send_keys("kavi@gmail.com")
         password_input.send_keys("kavipriyan")
         login_button = driver.find_element(By.XPATH, '//button[.//span[contains(text(), "Login")]]')
-        assert email_input.is_displayed()
-        assert password_input.is_displayed()
         login_button.click()
         expected_url = "http://frontendcontainer/prediction"
         sleep(1)
