@@ -31,29 +31,43 @@ class LoginTest(unittest.TestCase):
         chrome_options.add_argument("--remote-debugging-port=9222")
         environ["DISPLAY"] = ":99"
         self.driver = webdriver.Chrome(options=chrome_options)
+        self.driver.get("http://frontendcontainer:80")
 
     def invalid_email_type(self):
-        driver = self.driver
-        driver.get("http://frontendcontainer:80")
         email_input = driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
         email_error_message = driver.find_element(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
-
-    # Test Case: Verify that entering an incorrect email format shows an error message
-        email_input.send_keys("invalid-email")
+        email_input.send_keys("kavigmail")
         email_input.send_keys(Keys.TAB)  # Move focus out of the input field
-        assert email_error_message.is_displayed()
-
-    # Test Case: Verify that entering a valid email format clears the error message
-        email_input.clear()
-        email_input.send_keys("valid@example.com")
+        self.assertTrue(email_error_message.is_displayed())
+    def valid_email_type(self):
+        email_input = driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
+        email_error_message = driver.find_element(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
+        email_input.send_keys("kavipriyan@gmail")
         email_input.send_keys(Keys.TAB)  # Move focus out of the input field
-        assert not email_error_message.is_displayed()
-        
+        self.assertFalse(email_error_message.is_displayed())
+
+    def test_invalid_password_length(self):
+        # Find the password input field and the password error message element
+        password_input = self.driver.find_element(By.CSS_SELECTOR, "input[formControlName='password']")
+        password_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Password must be atleast 8 letters long')]")
+
+        # Test Case: Verify that entering a too short password shows an error message
+        password_input.send_keys("short")
+        password_input.send_keys(Keys.TAB)  # Move focus out of the input field
+        self.assertTrue(password_error_message.is_displayed())
+
+    def test_valid_password_length(self):
+        # Find the password input field and the password error message element
+        password_input = self.driver.find_element(By.CSS_SELECTOR, "input[formControlName='password']")
+        password_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Password must be atleast 8 letters long')]")
+
+        # Test Case: Verify that entering a valid password length clears the error message
+        password_input.clear()
+        password_input.send_keys("validpassword")
+        password_input.send_keys(Keys.TAB)  # Move focus out of the input field
+        self.assertFalse(password_error_message.is_displayed())
 
     def test_successful_login(self):
-        driver = self.driver
-        driver.get("http://frontendcontainer:80")
-
         email_input = driver.find_element(By.CSS_SELECTOR, 'input[formcontrolname="email"]')
         password_input = driver.find_element(By.CSS_SELECTOR, 'input[formcontrolname="password"]')
         email_input.send_keys("kavi@gmail.com")
