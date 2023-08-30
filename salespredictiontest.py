@@ -34,14 +34,14 @@ class LoginTest(unittest.TestCase):
         self.driver.get("http://frontendcontainer:80")
 
     def invalid_email_type(self):
-        email_input = driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
-        email_error_message = driver.find_element(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
+        email_input = self.driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
+        email_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
         email_input.send_keys("kavigmail")
         email_input.send_keys(Keys.TAB)  # Move focus out of the input field
         self.assertTrue(email_error_message.is_displayed())
     def valid_email_type(self):
-        email_input = driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
-        email_error_message = driver.find_element(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
+        email_input = self.driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
+        email_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
         email_input.send_keys("kavipriyan@gmail")
         email_input.send_keys(Keys.TAB)  # Move focus out of the input field
         self.assertFalse(email_error_message.is_displayed())
