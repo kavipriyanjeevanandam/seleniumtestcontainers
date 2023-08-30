@@ -38,19 +38,15 @@ class LoginTest(unittest.TestCase):
     def test_invalid_email_type(self):
         email_input = self.driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
         email_input.send_keys("kavigmail")
-        email_input.send_keys(Keys.TAB)  # Move focus out of the input field
+        email_input.send_keys(Keys.TAB) 
         email_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
-        print("invalid_email")
         self.assertTrue(email_error_message.is_displayed())
 
     def test_invalid_password_length(self):
-        # Find the password input field and the password error message element
         password_input = self.driver.find_element(By.CSS_SELECTOR, "input[formControlName='password']")
-        # Test Case: Verify that entering a too short password shows an error message
         password_input.send_keys("short")
-        password_input.send_keys(Keys.TAB)  # Move focus out of the input field
+        password_input.send_keys(Keys.TAB) 
         password_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Password must be atleast 8 letters long')]")
-        print("invalid_password")
         self.assertTrue(password_error_message.is_displayed())
 
 
@@ -63,7 +59,6 @@ class LoginTest(unittest.TestCase):
         login_button.click()
         expected_url = "http://frontendcontainer/prediction"
         sleep(1)
-        print("successful_login")
         self.assertEqual(self.driver.current_url, expected_url)
 
     def tearDown(self):
