@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
 from os import environ
 from time import sleep
 
@@ -33,6 +34,9 @@ class LoginTest(unittest.TestCase):
         environ["DISPLAY"] = ":99"
         self.driver = webdriver.Chrome(options=chrome_options)
         self.driver.get("http://frontendcontainer:80")
+    def wait_for_element_visible(self, by, value, timeout=10):
+        return WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located((by, value)))
+
 
     def invalid_email_type(self):
         email_input = self.driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
