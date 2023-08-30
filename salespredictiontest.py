@@ -2,6 +2,7 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
 from os import environ
 from time import sleep
 
@@ -37,13 +38,13 @@ class LoginTest(unittest.TestCase):
         email_input = self.driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
         email_input.send_keys("kavigmail")
         email_input.send_keys(Keys.TAB)  # Move focus out of the input field
-        email_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
+        email_error_message = self.driver.wait_for_element_visible(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
         self.assertTrue(email_error_message.is_displayed())
     def valid_email_type(self):
         email_input = self.driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
         email_input.send_keys("kavipriyan@gmail")
         email_input.send_keys(Keys.TAB)  # Move focus out of the input field
-        email_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
+        email_error_message = self.driver.wait_for_element_visible(By.XPATH, "//small[contains(text(),'Enter a valid email')]")
         self.assertFalse(email_error_message.is_displayed())
 
     def test_invalid_password_length(self):
@@ -53,7 +54,7 @@ class LoginTest(unittest.TestCase):
         # Test Case: Verify that entering a too short password shows an error message
         password_input.send_keys("short")
         password_input.send_keys(Keys.TAB)  # Move focus out of the input field
-        password_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Password must be atleast 8 letters long')]")
+        password_error_message = self.driver.wait_for_element_visible(By.XPATH, "//small[contains(text(),'Password must be atleast 8 letters long')]")
         self.assertTrue(password_error_message.is_displayed())
 
     def test_valid_password_length(self):
@@ -63,7 +64,7 @@ class LoginTest(unittest.TestCase):
         password_input.clear()
         password_input.send_keys("validpassword")
         password_input.send_keys(Keys.TAB)  # Move focus out of the input field
-        password_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Password must be atleast 8 letters long')]")
+        password_error_message = self.driver.wait_for_element_visible(By.XPATH, "//small[contains(text(),'Password must be atleast 8 letters long')]")
         self.assertFalse(password_error_message.is_displayed())
 
     def test_successful_login(self):
