@@ -35,7 +35,7 @@ class LoginTest(unittest.TestCase):
         self.driver.get("http://frontendcontainer:80")
 
 
-    def invalid_email_type(self):
+    def test_invalid_email_type(self):
         email_input = self.driver.find_element(By.CSS_SELECTOR, "input[formControlName='email']")
         email_input.send_keys("kavigmail")
         email_input.send_keys(Keys.TAB)  # Move focus out of the input field
