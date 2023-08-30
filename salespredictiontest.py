@@ -49,7 +49,6 @@ class LoginTest(unittest.TestCase):
         password_error_message = self.driver.find_element(By.XPATH, "//small[contains(text(),'Password must be atleast 8 letters long')]")
         self.assertTrue(password_error_message.is_displayed())
 
-
     def test_successful_login(self):
         email_input = self.driver.find_element(By.CSS_SELECTOR, 'input[formcontrolname="email"]')
         password_input = self.driver.find_element(By.CSS_SELECTOR, 'input[formcontrolname="password"]')
